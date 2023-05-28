@@ -6,6 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>3-level Lift</title>
         <link rel="stylesheet" href="styles.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
     </head>
     <body>
         <div class="container">
@@ -15,33 +19,33 @@
             <div class="level" id="level-2">
                 <h3 class="label">level-2</h3>
                 <span>
-                    <button
-                        class="button level-2 down-btn"
+                    <span
+                        class="span level-2 down-btn"
                         id="level-2-down"
                         onclick="callLift(2,'DOWN')"
                     >
-                        DOWN
-                    </button>
+                        <i class="fa-solid fa-down-long"></i>
+                    </span>
                 </span>
             </div>
 
             <div class="level" id="level-1">
                 <h3 class="label">level-1</h3>
                 <span>
-                    <button
-                        class="button level-1 up-btn"
+                    <span
+                        class="span level-1 up-btn"
                         id="level-1-up"
                         onclick="callLift(1,'UP')"
                     >
-                        UP
-                    </button>
-                    <button
-                        class="button level-1 donw-btn"
+                        <i class="fa-solid fa-up-long"></i>
+                    </span>
+                    <span
+                        class="span level-1 donw-btn"
                         id="level-1-down"
                         onclick="callLift(1,'DOWN')"
                     >
-                        DOWN
-                    </button>
+                        <i class="fa-solid fa-down-long"></i>
+                    </span>
                 </span>
             </div>
 
@@ -49,13 +53,13 @@
                 <h3 class="label">level-0</h3>
 
                 <span>
-                    <button
-                        class="button level-0"
+                    <span
+                        class="span level-0"
                         id="level-0-up up-btn"
                         onclick="callLift(0,'UP')"
                     >
-                        UP
-                    </button>
+                        <i class="fa-solid fa-up-long"></i>
+                    </span>
                 </span>
             </div>
         </div>
