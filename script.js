@@ -1,6 +1,7 @@
 const liftState = {
     level: 2,
     moving: false,
+
     queue: [],
 }
 
@@ -9,11 +10,17 @@ const lift = document.querySelector("#lift")
 function createAnimation(interval, direction) {
     const value = `${interval * 16}vw`
     document.documentElement.style.setProperty("--transform-length", value)
-    return `move-${direction} ${5 * interval}s ease 1 forwards`
+    return `move-${direction} ${5 * interval}s ease-in-out 1 forwards`
 }
-
+let time = 0
+let timeInterval = setInterval(() => {
+    time += 100
+    // console.log(time)
+}, 100)
 function callLift(level, direction) {
     if (liftState.moving === false && level !== 1) {
+        time = 0
+        console.log(time)
         liftState.queue.push(level)
         const interval = 2
         switch (direction) {
@@ -47,6 +54,7 @@ function callLift(level, direction) {
             liftState.level = level
             liftState.moving = false
             console.log("reached extreme")
+            time = 0
         }, 10000)
         switch (liftState.level) {
             case 0:
@@ -58,20 +66,14 @@ function callLift(level, direction) {
             case 2:
                 lift.style.top = "5vw"
         }
-    } else if (
-        liftState.moving === direction &&
-        level === 1 &&
-        liftState.level !== 1
-    ) {
+    } else if (liftState.moving === direction && liftState.level !== 1) {
         liftState.queue.push(level)
-        console.log("second case")
-        const interval = 1
-        const animation = createAnimation(interval, direction)
-        lift.style.animation = createAnimation(interval, direction)
+        console.log(5000 - time)
         setTimeout(() => {
-            const animation = createAnimation(interval, direction)
-            lift.style.animation = animation
-            console.log(animation)
-        }, 5000)
+            lift.style.animationPlayState = "paused"
+        }, 5000 - time)
+        setTimeout(() => {
+            lift.style.animationPlayState = "running"
+        }, 5000 - time + 500)
     }
 }
