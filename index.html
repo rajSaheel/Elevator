@@ -9,23 +9,51 @@
     </head>
     <body>
         <div class="container">
-            <div id="lift"></div>
-            <div class="level" id="level-1">
-                <h3 class="label">level-1</h3>
-                <span> <button class="button level-1">DOWN</button> </span>
+            <div id="lift">
+                <h2>Elevator</h2>
             </div>
             <div class="level" id="level-2">
                 <h3 class="label">level-2</h3>
                 <span>
-                    <button class="button level-2">UP</button>
-                    <button class="button level-2">DOWN</button>
+                    <button
+                        class="button level-2 down-btn"
+                        id="level-2-down"
+                        onclick="callLift(0,'DOWN')"
+                    >
+                        DOWN
+                    </button>
                 </span>
             </div>
-            <div class="level" id="level-3">
-                <h3 class="label">level-3</h3>
+            <div class="level" id="level-1">
+                <h3 class="label">level-1</h3>
+                <span>
+                    <button
+                        class="button level-1 up-btn"
+                        id="level-1-up"
+                        onclick="callLift(1,'UP')"
+                    >
+                        UP
+                    </button>
+                    <button
+                        class="button level-1 donw-btn"
+                        id="level-1-down"
+                        onclick="callLift(1,'DOWN')"
+                    >
+                        DOWN
+                    </button>
+                </span>
+            </div>
+            <div class="level" id="level-0">
+                <h3 class="label">level-0</h3>
 
                 <span>
-                    <button class="button level-3">UP</button>
+                    <button
+                        class="button level-0"
+                        id="level-0-up up-btn"
+                        onclick="callLift(2,'UP')"
+                    >
+                        UP
+                    </button>
                 </span>
             </div>
         </div>

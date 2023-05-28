@@ -1,3 +1,7 @@
+:root {
+    --transform-length: 16vw;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -5,11 +9,18 @@
     text-align: center;
 }
 
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    justify-self: center;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -33,7 +44,7 @@
     border: 1px solid #000;
     padding: 2px 4px;
     position: relative;
-    top: -6vw;
+    top: -6.2vw;
 }
 
 span {
@@ -45,20 +56,53 @@ span {
 #lift {
     background-color: #a8601c;
     position: absolute;
-    top: 37vw;
+    top: 5vw;
     z-index: 1000;
     width: 18vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 2px solid #a8601c;
     height: 12vw;
+    color: aliceblue;
+    /* animation: move-DOWN 5s ease-in-out 1 forwards; */
 }
 
 button {
+    background-color: blanchedalmond;
+    outline: none;
+    padding: 2px;
     width: fit-content;
     font-size: 1vw;
+    cursor: pointer;
+}
+/* 
+@keyframes move-DOWN-step {
+    50% {
+        transform: translateY(16vw);
+    }
+    100% {
+        transform: translateY(32vw);
+    }
 }
 
-@keyframes moveDown {
+@keyframes move-UP-step {
+    50% {
+        transform: translateY(-16vw);
+    }
     100% {
-        transform: translateY(16vw);
+        transform: translateY(-32vw);
+    }
+} */
+
+@keyframes move-DOWN {
+    100% {
+        transform: translateY(var(--transform-length));
+    }
+}
+
+@keyframes move-UP {
+    100% {
+        transform: translateY(calc(-1 * var(--transform-length)));
     }
 }
