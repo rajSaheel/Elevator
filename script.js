@@ -1,6 +1,6 @@
 const maxLevel = document.querySelectorAll(".level").length - 1
 const lift = document.querySelector("#lift")
-const timePerLevel = 2000
+const timePerLevel = 5000
 
 const liftState = {
     level: maxLevel,
@@ -101,7 +101,7 @@ function callLift(level, direction) {
 function createAnimation(interval, direction) {
     const value = `${interval * 16}vw`
     document.documentElement.style.setProperty("--transform-length", value)
-    return `move-${direction} ${2 * interval}s linear 1 forwards `
+    return `move-${direction} ${5 * interval}s linear 1 forwards `
 }
 
 function pushCall(level, direction) {
