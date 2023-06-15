@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>3-level Lift</title>
+        <title>Elevator</title>
         <link rel="stylesheet" href="styles.css" />
         <link
             rel="stylesheet"
@@ -16,47 +16,84 @@
             <div id="lift">
                 <h2>Elevator</h2>
             </div>
-            <div class="level" id="level-2">
-                <h3 class="label">level-2</h3>
+            <div class="level" id="level-4">
+                <h3 class="label">level-4</h3>
                 <span>
                     <span
-                        class="span level-2 down-btn"
-                        id="level-2-down"
-                        onclick="callLift(2,'DOWN')"
+                        class="span level-4 DOWN-btn"
+                        id="level-4-DOWN"
+                        onclick="buttonPressed(4,'DOWN')"
                     >
                         <i class="fa-solid fa-down-long"></i>
                     </span>
                 </span>
             </div>
 
-            <div class="level" id="level-1">
-                <h3 class="label">level-1</h3>
+            <div class="level" id="level-3">
+                <h3 class="label">level-3</h3>
                 <span>
                     <span
-                        class="span level-1 up-btn"
-                        id="level-1-up"
-                        onclick="callLift(1,'UP')"
+                        class="span level-3 UP-btn"
+                        id="level-3-UP"
+                        onclick="buttonPressed(3,'UP')"
                     >
                         <i class="fa-solid fa-up-long"></i>
                     </span>
                     <span
-                        class="span level-1 donw-btn"
-                        id="level-1-down"
-                        onclick="callLift(1,'DOWN')"
+                        class="span level-3 DOWN-btn"
+                        id="level-3-DOWN"
+                        onclick="buttonPressed(3,'DOWN')"
                     >
                         <i class="fa-solid fa-down-long"></i>
                     </span>
                 </span>
             </div>
-
+            <div class="level" id="level-2">
+                <h3 class="label">level-2</h3>
+                <span>
+                    <span
+                        class="span level-2 UP-btn"
+                        id="level-2-UP"
+                        onclick="buttonPressed(2,'UP')"
+                    >
+                        <i class="fa-solid fa-up-long"></i>
+                    </span>
+                    <span
+                        class="span level-2 DOWN-btn"
+                        id="level-2-DOWN"
+                        onclick="buttonPressed(2,'DOWN')"
+                    >
+                        <i class="fa-solid fa-down-long"></i>
+                    </span>
+                </span>
+            </div>
+            <div class="level" id="level-1">
+                <h3 class="label">level-1</h3>
+                <span>
+                    <span
+                        class="span level-1 UP-btn"
+                        id="level-1-UP"
+                        onclick="buttonPressed(1,'UP')"
+                    >
+                        <i class="fa-solid fa-up-long"></i>
+                    </span>
+                    <span
+                        class="span level-1 DOWN-btn"
+                        id="level-1-DOWN"
+                        onclick="buttonPressed(1,'DOWN')"
+                    >
+                        <i class="fa-solid fa-down-long"></i>
+                    </span>
+                </span>
+            </div>
             <div class="level" id="level-0">
                 <h3 class="label">level-0</h3>
 
                 <span>
                     <span
-                        class="span level-0"
-                        id="level-0-up up-btn"
-                        onclick="callLift(0,'UP')"
+                        class="span level-0 UP-btn"
+                        id="level-0-UP"
+                        onclick="buttonPressed(0,'UP')"
                     >
                         <i class="fa-solid fa-up-long"></i>
                     </span>

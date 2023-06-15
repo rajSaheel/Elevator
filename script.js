@@ -1,103 +1,144 @@
 const maxLevel = document.querySelectorAll(".level").length - 1
 const lift = document.querySelector("#lift")
-const timePerLevel = 5000
+const timePerLevel = 2000
 
 const liftState = {
     level: maxLevel,
     moving: false,
+    queue: { UP: [], DOWN: [] },
 }
 
 const filler = new Audio("./assets/filler.mp3")
 const ding = new Audio("./assets/ding.mp3")
 
-let time = 0
-let timeInterval = setInterval(() => {
-    time += 100
-}, 100)
-
 function callLift(level, direction) {
-    if (liftState.moving === false && (level == 0 || level == maxLevel)) {
-        time = 0
-        const interval = maxLevel
-        switch (direction) {
-            case "UP":
-                if (liftState.level < maxLevel) {
-                    lift.style.top = `${16 * maxLevel + 5}vw`
-                    filler.play()
-                    lift.style.animation = createAnimation(interval, direction)
-                    liftState.moving = direction
-                    for (let i = 0; i < maxLevel; i++) {
-                        globalThis.stepInterval = setTimeout(() => {
-                            liftState.level = liftState.level + 1
-                            console.log(`crossed level-${i}`)
-                        }, timePerLevel * (i + 1))
-                    }
-                }
-                break
-            case "DOWN":
-                if (liftState.level > 0) {
-                    filler.play()
-                    lift.style.top = "5vw"
-                    lift.style.animation = createAnimation(interval, direction)
-                    liftState.moving = direction
-
-                    for (let i = maxLevel; i > 0; i--) {
-                        globalThis.stepInterval = setTimeout(() => {
-                            liftState.level = liftState.level - 1
-                            console.log(`crossed level-${i}`)
-                        }, timePerLevel * (maxLevel - i + 1))
-                    }
-                }
-                break
-            default:
-        }
-        globalThis.fullInterval = setTimeout(() => {
-            filler.pause()
-            ding.play()
-            liftState.level = direction === "UP" ? maxLevel : 0
-            liftState.moving = false
-            console.log("reached extreme")
-            time = 0
-        }, timePerLevel * maxLevel)
-    } else if (liftState.moving === direction) {
-        switch (direction) {
-            case "UP":
-                console.log(time)
-                if (liftState.level <= level && timePerLevel * level > time) {
-                    setTimeout(() => {
-                        clearTimeout(globalThis.stepInterval)
-                        clearTimeout(globalThis.fullInterval)
-                        lift.style.animationPlayState = "paused"
-                        filler.pause()
-                        ding.play()
-                        console.log("pressed at" + level)
-                        time = 0
-                    }, timePerLevel * level - time)
-                }
-                break
-
-            case "DOWN":
-                console.log(time)
-                if (
-                    liftState.level >= level &&
-                    timePerLevel * (maxLevel - level) > time
-                ) {
-                    setTimeout(() => {
-                        clearTimeout(globalThis.stepInterval)
-                        clearTimeout(globalThis.fullInterval)
+    console.log(liftState)
+    switch (direction) {
+        case "UP":
+            if (liftState.level < maxLevel) {
+                lift.style.top = `${16 * maxLevel + 3}vw`
+                filler.play()
+                lift.style.animation = createAnimation(maxLevel, direction)
+                liftState.moving = direction
+                const targets = [...liftState.queue.UP]
+                targets.push(maxLevel)
+                liftState.queue[direction] = []
+                let pauseDuration = timePerLevel * targets[0]
+                let resumeDuration = timePerLevel * targets[0] + timePerLevel
+                for (let i = 0; i < targets.length; i++) {
+                    let interval = Math.abs(targets[i] - targets[i + 1])
+                    globalThis.stoppageTimeout = setTimeout(() => {
+                        liftState.level = targets[i]
+                        liftState.moving = false
                         filler.pause()
                         ding.play()
                         lift.style.animationPlayState = "paused"
-                        time = 0
-                    }, timePerLevel * (maxLevel - level) - time)
+                        removeHighlight(targets[i], direction)
+                    }, pauseDuration)
+                    globalThis.resumeTimeout = setTimeout(() => {
+                        if (targets[i] === maxLevel) {
+                            if (
+                                liftState.queue.DOWN.length !== 0 ||
+                                liftState.queue.DOWN.length !== 0
+                            ) {
+                                callLift(maxLevel, "DOWN")
+                            }
+                        } else {
+                            liftState.moving = direction
+                            filler.play()
+                            lift.style.animationPlayState = "running"
+                        }
+                    }, resumeDuration)
+                    pauseDuration += timePerLevel * (interval + 1)
+                    resumeDuration += timePerLevel * (interval + 1)
                 }
-                break
-        }
+            }
+            break
+        case "DOWN":
+            if (liftState.level > 0) {
+                lift.style.top = `${3}vw`
+                filler.play()
+                lift.style.animation = createAnimation(maxLevel, direction)
+                liftState.moving = direction
+                const targets = [...liftState.queue.DOWN]
+                targets.push(maxLevel)
+                liftState.queue[direction] = []
+                let pauseDuration = timePerLevel * targets[0]
+                let resumeDuration = timePerLevel * targets[0] + timePerLevel
+                for (let i = 0; i < targets.length; i++) {
+                    let interval = Math.abs(targets[i] - targets[i + 1])
+                    globalThis.stoppageTimeout = setTimeout(() => {
+                        liftState.level = maxLevel - targets[i]
+                        liftState.moving = false
+                        filler.pause()
+                        ding.play()
+                        lift.style.animationPlayState = "paused"
+                        removeHighlight(maxLevel - targets[i], direction)
+                    }, pauseDuration)
+                    globalThis.resumeTimeout = setTimeout(() => {
+                        if (targets[i] === maxLevel) {
+                            if (
+                                liftState.queue.UP.length !== 0 ||
+                                liftState.queue.DOWN.length !== 0
+                            ) {
+                                callLift(0, "UP")
+                            }
+                        } else {
+                            liftState.moving = direction
+                            filler.play()
+                            lift.style.animationPlayState = "running"
+                        }
+                    }, resumeDuration)
+                    pauseDuration += timePerLevel * (interval + 1)
+                    resumeDuration += timePerLevel * (interval + 1)
+                }
+            }
+            break
+        default:
     }
 }
 
 function createAnimation(interval, direction) {
     const value = `${interval * 16}vw`
     document.documentElement.style.setProperty("--transform-length", value)
-    return `move-${direction} ${5 * interval}s ease-in-out 1 forwards`
+    return `move-${direction} ${2 * interval}s linear 1 forwards `
+}
+
+function pushCall(level, direction) {
+    let i = 0
+    if (direction === "UP") {
+        for (let item of liftState.queue.UP) {
+            if (item === level) return
+            i++
+        }
+        liftState.queue.UP.push(level)
+        liftState.queue.UP.sort()
+    } else if (direction === "DOWN") {
+        for (let item of liftState.queue.DOWN) {
+            if (item === maxLevel - level) return
+            i++
+        }
+        liftState.queue.DOWN.push(maxLevel - level)
+        liftState.queue.DOWN.sort()
+    }
+}
+
+function buttonPressed(level, direction) {
+    if (!(level === 0 || level === maxLevel)) {
+        addHighlight(level, direction)
+        pushCall(level, direction)
+    } else if (liftState.level === 0 || liftState.level === maxLevel)
+        callLift(level, direction)
+}
+
+function addHighlight(level, direction) {
+    document
+        .getElementById(`level-${level}-${direction}`)
+        .firstElementChild.classList.add("highlight")
+}
+
+function removeHighlight(level, direction) {
+    document
+        .getElementById(`level-${level}-${direction}`)
+        .firstElementChild.classList.remove("highlight")
 }

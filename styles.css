@@ -22,11 +22,11 @@ body {
     justify-content: center;
     align-items: center;
     justify-self: center;
-    position: absolute;
+    /* position: absolute;
     top: 0;
     bottom: 0;
     right: 0;
-    left: 0;
+    left: 0; */
     font-size: 1vw;
     padding: 2px;
 }
@@ -58,7 +58,7 @@ span {
 #lift {
     background-color: #a8601c;
     position: absolute;
-    top: 5vw;
+    top: 3vw;
     z-index: 1000;
     width: 18vw;
     display: flex;
@@ -77,6 +77,10 @@ i {
     width: fit-content;
     font-size: 3vw;
     cursor: pointer;
+}
+
+.highlight {
+    color: coral;
 }
 
 @keyframes move-DOWN {
